@@ -15,5 +15,8 @@
 ## Build Docker
 
 ```
- docker build .
+ docker build -t ddesyllas924/mockcdn .
 ```
+
+## RUN Container
+
