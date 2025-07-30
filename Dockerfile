@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 COPY . .
 
 RUN go mod tidy
-RUN go build -o gocdn
+RUN CGO_ENABLED=0 GOOS=linux go build -a -o gocdn .
 
 FROM scratch
 
@@ -14,8 +14,8 @@ ENV MINIO_ENDPOINT="http://localhost:9444"
 ENV MINIO_REGION="us-east-1"
 ENV MINIO_ACCESS_KEY=""
 ENV MINIO_SECRET_KEY=""
-ENV PORT=80
 
-COPY --from=build --chmod=0755 /usr/src/app/gocdn /usr/bin/
+EXPOSE 8080
 
-CMD ["/usr/bin/gocdn"]
+COPY --from=build --chmod=0755 /usr/src/app/gocdn /gocdn
+CMD ["/gocdn"]

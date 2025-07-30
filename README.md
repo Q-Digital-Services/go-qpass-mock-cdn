@@ -16,7 +16,6 @@
 
 ```
  docker build -t ddesyllas924/mockcdn .
+ docker push desyllas924/mockcdn
 ```
-
-## RUN Container
 

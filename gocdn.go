@@ -34,7 +34,12 @@ func main() {
 	}
 
 	endpoint := os.Getenv("MINIO_ENDPOINT")
+
 	region := os.Getenv("MINIO_REGION")
+	if(region == ""){
+		region="us-east-1"
+	}
+
 	accessKey := os.Getenv("MINIO_ACCESS_KEY")
 	secretKey := os.Getenv("MINIO_SECRET_KEY")
 
