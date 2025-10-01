@@ -17,18 +17,18 @@
 ### Login
 
 ```
- # Replace mypassword with your own password of github access token
- export GH_TOKEN="mypassword" 
- # Replace with your username
- export GH_USERNAME="myuser"
- echo $GH_TOKEN | docker login ghcr.io -u ${GH_USERNAME} --password-stdin
+# Replace mypassword with your own password of github access token
+export GH_TOKEN="mypassword" 
+# Replace with your username
+export GH_USERNAME="myuser"
+echo $GH_TOKEN | docker login ghcr.io -u ${GH_USERNAME} --password-stdin
 ```
 
 ### Publish
 
 ```
- docker build -t ghcr.io/go-qpass-mock-cdn/mockcdn .
- docker push ghcr.io/go-qpass-mock-cdn/mockcdn
+docker build -t ghcr.io/q-digital-services/go-qpass-mock-cdn .
+docker push ghcr.io/q-digital-services/go-qpass-mock-cdn
 ```
 
 ## Testing locally
