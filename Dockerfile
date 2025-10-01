@@ -9,11 +9,11 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -o gocdn .
 
 FROM scratch
 
-ENV MINIO_BUCKET=""
-ENV MINIO_ENDPOINT="http://localhost:9444"
-ENV MINIO_REGION="us-east-1"
-ENV MINIO_ACCESS_KEY=""
-ENV MINIO_SECRET_KEY=""
+ENV BUCKET=""
+ENV ENDPOINT="http://localhost:9444"
+ENV REGION="us-east-1"
+ENV ACCESS_KEY=""
+ENV SECRET_KEY=""
 
 EXPOSE 8080
 

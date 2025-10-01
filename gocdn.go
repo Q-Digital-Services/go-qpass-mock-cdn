@@ -21,20 +21,20 @@ var (
 )
 
 func initS3() (*s3.Client){
-	bucket = os.Getenv("MINIO_BUCKET")
+	bucket = os.Getenv("BUCKET")
 	if bucket == "" {
-		log.Fatal("MINIO_BUCKET is required")
+		log.Fatal("BUCKET is required")
 	}
 
-	endpoint := os.Getenv("MINIO_ENDPOINT")
+	endpoint := os.Getenv("ENDPOINT")
 
-	region := os.Getenv("MINIO_REGION")
+	region := os.Getenv("REGION")
 	if(region == ""){
 		region="us-east-1"
 	}
 
-	accessKey := os.Getenv("MINIO_ACCESS_KEY")
-	secretKey := os.Getenv("MINIO_SECRET_KEY")
+	accessKey := os.Getenv("ACCESS_KEY")
+	secretKey := os.Getenv("SECRET_KEY")
 
 	// AWS config with static creds for MinIO
 	customResolver := aws.EndpointResolverWithOptionsFunc(
