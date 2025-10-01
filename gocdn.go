@@ -13,7 +13,6 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	s3 "github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/aws-sdk-go-v2/credentials"
-	"github.com/joho/godotenv"
 )
 
 var (
@@ -21,13 +20,7 @@ var (
 	bucket   string
 )
 
-func main() {
-	// Load environment variables
-	err := godotenv.Load()
-	if err != nil {
-		log.Println("No .env file found, relying on environment vars.")
-	}
-
+func initS3() (*s3.Client){
 	bucket = os.Getenv("MINIO_BUCKET")
 	if bucket == "" {
 		log.Fatal("MINIO_BUCKET is required")
@@ -65,9 +58,14 @@ func main() {
 
 	fmt.Println(endpoint,region, accessKey, secretKey,bucket )
 
-	s3Client = s3.NewFromConfig(cfg, func(o *s3.Options) {
+	return s3.NewFromConfig(cfg, func(o *s3.Options) {
 		o.UsePathStyle = true	
 	})
+}
+
+func main() {
+	// Load environment variables
+	s3Client = initS3()
 
 	// Start HTTP server
 	http.HandleFunc("/", handleRequest)
@@ -76,7 +74,7 @@ func main() {
 		port = "8080"
 	}
 
-	fmt.Println("📦 CDN running at http://localhost:" + port)
+	fmt.Println("📦 CDN running at http://0.0.0.0:" + port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
@@ -91,11 +89,13 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 		Bucket: aws.String(bucket),
 		Key:    aws.String(key),
 	})
+
 	if err != nil {
 		http.Error(w, "Object not found", http.StatusNotFound)
 		log.Printf("S3 error: %v", err)
 		return
 	}
+
 	defer obj.Body.Close()
 
 	// Set content type and cache headers
