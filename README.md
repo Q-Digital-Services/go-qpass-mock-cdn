@@ -14,6 +14,8 @@
 
 ## Build Docker
 
+> NOTE if pushing upon `master` the whople process is automated via github actions.
+
 ### Login
 
 ```
